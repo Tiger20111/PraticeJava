@@ -73,7 +73,7 @@ public class ServiceWeather {
 
     return averageRate;
   }
-  
+
 
   private int getUnixTilMonth(int month) {
     int sumDays = 0;
