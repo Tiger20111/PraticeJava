@@ -8,18 +8,16 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.Map;
 import java.util.TreeMap;
 
-import static application.tests.bd.Utils.FormatData;
 import static application.tests.bd.Utils.convertToUnix;
 import static application.tests.bd.Utils.getDoubleFromString;
 
 @Component
 public class ServiceWeather {
 
-  @Autowired
-  private WeatherRepository repWeather;
 
   ServiceWeather() {
 
@@ -33,15 +31,19 @@ public class ServiceWeather {
     return response.getBody();
   }
 
-  Double getTemperatureDate(String data) throws ParseException {
+  Double getTemperatureDate(String data, WeatherRepository repWeather) throws ParseException {
 
-    /*WeatherRate weatherRate = repWeather.findByData(FormatData(data));
+    Date date = new Date();
+    if (repWeather == null) {
+      return  -1.0;
+    }
+    WeatherRate weatherRate = repWeather.findByData(date);
 
 
     if (weatherRate != null) {
       return weatherRate.getPercentage();
     }
-*/
+
 
     String request = getTemperatures(data);
 
@@ -54,8 +56,8 @@ public class ServiceWeather {
 
     double averageRate = sumTemp / temperatures.size();
 
-    //WeatherRate weatherRateNew = new WeatherRate(data, averageRate);
-    //repWeather.save(weatherRateNew);
+    WeatherRate weatherRateNew = new WeatherRate(data, averageRate);
+    repWeather.save(weatherRateNew);
 
     return averageRate;
 

@@ -37,7 +37,6 @@ public class ControllerRBC {
   }
 
 
-
   private final ServiceRBC service;
 }
 
