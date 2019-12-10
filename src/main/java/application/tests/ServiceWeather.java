@@ -35,14 +35,15 @@ public class ServiceWeather {
 
   Double getTemperatureDate(String data) throws ParseException {
 
-    WeatherRate weatherRate = repWeather.findByData(FormatData(data));
+    /*WeatherRate weatherRate = repWeather.findByData(FormatData(data));
+
+
     if (weatherRate != null) {
       return weatherRate.getPercentage();
     }
+*/
 
     String request = getTemperatures(data);
-    return request.length() + 0.0;
-    /*
 
     TreeMap<Double, Double> temperatures =  parseTemperatures(request);
     double sumTemp = 0;
@@ -53,11 +54,11 @@ public class ServiceWeather {
 
     double averageRate = sumTemp / temperatures.size();
 
-    WeatherRate weatherRateNew = new WeatherRate(data, averageRate);
-    repWeather.save(weatherRateNew);
+    //WeatherRate weatherRateNew = new WeatherRate(data, averageRate);
+    //repWeather.save(weatherRateNew);
 
     return averageRate;
-    */
+
   }
 
 
