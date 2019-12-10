@@ -8,12 +8,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.Map;
 import java.util.TreeMap;
 
 import static application.tests.bd.Utils.FormatData;
+import static application.tests.bd.Utils.convertToUnix;
 import static application.tests.bd.Utils.getDoubleFromString;
 
 @Component
@@ -23,26 +22,10 @@ public class ServiceWeather {
   private WeatherRepository repWeather;
 
   ServiceWeather() {
-    dayMonth = new ArrayList<>();
-    dayMonth.add(31); //Январь
-    dayMonth.add(28); //Февраль
-    dayMonth.add(31); //Март
-    dayMonth.add(30); //Апрель
-    dayMonth.add(31); //Март
-    dayMonth.add(30); //Май
-    dayMonth.add(30); //Июнь
-    dayMonth.add(31); //Июль
-    dayMonth.add(31); //Август
-    dayMonth.add(30); //Сентябрь
-    dayMonth.add(31); //Октябрь
-    dayMonth.add(30); //Ноябрь
-    dayMonth.add(31); //Декабрь
 
-    currentYear = 2019;
-    startUnixYear = 1546300800;
   }
 
-  String getTemperatures(String data) {
+  private String getTemperatures(String data) {
     String unixTime = convertToUnix(data);
     String url = apiForecast + hash + location + unixTime + flag;
     RestTemplate restTemplate = new RestTemplate();
@@ -58,6 +41,8 @@ public class ServiceWeather {
     }
 
     String request = getTemperatures(data);
+    return request.length() + 0.0;
+    /*
 
     TreeMap<Double, Double> temperatures =  parseTemperatures(request);
     double sumTemp = 0;
@@ -72,19 +57,11 @@ public class ServiceWeather {
     repWeather.save(weatherRateNew);
 
     return averageRate;
+    */
   }
 
 
-  private int getUnixTilMonth(int month) {
-    int sumDays = 0;
-    for (int i = 0; i < month; i++) {
-      sumDays += dayMonth.get(i);
-    }
-
-    return sumDays * secDay;
-  }
-
-  TreeMap<Double, Double> parseTemperatures(String request) {
+  private TreeMap<Double, Double> parseTemperatures(String request) {
     String[] lines = request.split("apparentTemperature");
     TreeMap<Double, Double> temperatures= new TreeMap<>();
     int timeIndex = 0;
@@ -109,9 +86,6 @@ public class ServiceWeather {
   private static final String location = "/40.7127,-74.0059,";
   private static final String flag = "?exclude=currently,flag";
   private static final String hash = "6880e28eeb567a5ffda54af015126cf6";
-  private ArrayList<Integer> dayMonth; //Дней в месяце.
-  private int currentYear;
-  private int startUnixYear;
-  private static final int secDay = 86400;
+
   //Там юзается unix time. У нас в день 24*60*60 = 86400 секунд. На 01 января 01 декабря 2019 года приходится 1546300800.
 }

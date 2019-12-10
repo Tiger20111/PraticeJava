@@ -4,10 +4,31 @@ import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 @Component
 public class Utils {
+
+  Utils() {
+    dayMonth = new ArrayList<>();
+    dayMonth.add(31); //Январь
+    dayMonth.add(28); //Февраль
+    dayMonth.add(31); //Март
+    dayMonth.add(30); //Апрель
+    dayMonth.add(31); //Март
+    dayMonth.add(30); //Май
+    dayMonth.add(30); //Июнь
+    dayMonth.add(31); //Июль
+    dayMonth.add(31); //Август
+    dayMonth.add(30); //Сентябрь
+    dayMonth.add(31); //Октябрь
+    dayMonth.add(30); //Ноябрь
+    dayMonth.add(31); //Декабрь
+
+    currentYear = 2019;
+    startUnixYear = 1546300800;
+  }
 
   public static Date FormatData(String date) throws ParseException {
     //подается как dd.MM.yyyy
@@ -33,7 +54,7 @@ public class Utils {
   }
 
   public static Double getDoubleFromString(String line, int startIndex) {
-    StringBuilder number = new StringBuilder();
+    /*StringBuilder number = new StringBuilder();
     boolean inNumber = false;
     for(int i = startIndex; i < line.length(); i++) {
       char symbol = line.charAt(i);
@@ -57,11 +78,22 @@ public class Utils {
       }
 
     }
-
+  */
     return line.length() + 0.0;
   }
 
-  private String convertToUnix(String data) {
+  private static int getUnixTilMonth(int month) {
+    int sumDays = 0;
+    for (int i = 0; i < month; i++) {
+      sumDays += dayMonth.get(i);
+    }
+
+    return sumDays * secDay;
+  }
+
+  ///изменить время переъолд
+
+  public static String convertToUnix(String data) {
     //Тип будет 23.10.1998 такого вида
     int numDays = 0;
     int numMonths = 0;
@@ -80,4 +112,8 @@ public class Utils {
     return Integer.toString(unixTime);
   }
 
+  private static ArrayList<Integer> dayMonth; //Дней в месяце.
+  private static int currentYear;
+  private static int startUnixYear;
+  private static final int secDay = 86400;
 }
