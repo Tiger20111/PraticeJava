@@ -10,6 +10,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 
 import static application.tests.bd.Utils.formatDate;
+import static application.tests.bd.Utils.formatDateFromDollarPrint;
 
 class ServiceRBC {
 
@@ -23,7 +24,7 @@ class ServiceRBC {
     return response.getBody();
   }
 
-  int saveMonthDollars(String body, DollarRepository dollarRepository) throws ParseException {
+  int saveMonthDollars(String body, DollarRepository dollarRepository) throws Exception {
     String[] lines = body.split("\n");
     ArrayList<DollarRate> dollarRates = new ArrayList<>();
     double sumDollars = 0;
@@ -31,13 +32,15 @@ class ServiceRBC {
     String date = "";
 
     for (String line : lines) {
-      String[] words = " ".split(line);
+      String hm = line.substring(12, 13);
+      String[] words = line.split(hm);
+
       for (String word : words) {
         if (isNewDate(word)) {
           if (numDays == 0) {
             date = word;
           } else {
-            DollarRate dollarRate = new DollarRate(formatDate(date), (sumDollars / numDays));
+            DollarRate dollarRate = new DollarRate(formatDateFromDollarPrint(date), (sumDollars / numDays));
             dollarRates.add(dollarRate);
             sumDollars = 0;
             numDays = 0;
@@ -51,11 +54,12 @@ class ServiceRBC {
         }
       }
     }
-
+/*
     if (numDays != 0) {
       DollarRate dollarRate = new DollarRate(formatDate(date), (sumDollars / numDays));
       dollarRates.add(dollarRate);
     }
+*/
     if (dollarRates.size() != 0) {
       dollarRepository.saveAll(dollarRates);
     }
@@ -74,13 +78,13 @@ class ServiceRBC {
   }
 
   private Boolean isNewDate(String word) {
-    int numPoints = 0;
+    int numDash = 0;
     for (int i = 0; i < word.length(); i++) {
-      if (word.charAt(i) == '.') {
-        numPoints++;
+      if (word.charAt(i) == '-') {
+        numDash++;
       }
     }
-    return numPoints == 2;
+    return numDash == 2;
   }
 
   Double parseRequest(String body) {
