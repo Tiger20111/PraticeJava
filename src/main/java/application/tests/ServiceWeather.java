@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.TreeMap;
 
+import static application.tests.bd.Utils.FormatData;
 import static application.tests.bd.Utils.convertToUnix;
 import static application.tests.bd.Utils.getDoubleFromString;
 
@@ -31,13 +32,12 @@ public class ServiceWeather {
     return response.getBody();
   }
 
-  Double getTemperatureDate(String data, WeatherRepository repWeather) throws ParseException {
+  Double getTemperatureDate(String data, WeatherRepository weatherRepository) throws ParseException {
 
-    Date date = new Date();
-    if (repWeather == null) {
+    if (weatherRepository == null) {
       return  -1.0;
     }
-    WeatherRate weatherRate = repWeather.findByData(date);
+    WeatherRate weatherRate = weatherRepository.findByData(FormatData(data));
 
 
     if (weatherRate != null) {
@@ -57,7 +57,7 @@ public class ServiceWeather {
     double averageRate = sumTemp / temperatures.size();
 
     WeatherRate weatherRateNew = new WeatherRate(data, averageRate);
-    repWeather.save(weatherRateNew);
+    weatherRepository.save(weatherRateNew);
 
     return averageRate;
 
@@ -67,7 +67,7 @@ public class ServiceWeather {
   private TreeMap<Double, Double> parseTemperatures(String request) {
     String[] lines = request.split("apparentTemperature");
     TreeMap<Double, Double> temperatures= new TreeMap<>();
-    int timeIndex = 0;
+    int timeIndex;
     for (String line : lines) {
       int temperatureIndex = line.lastIndexOf("\"temperature\"");
       if (temperatureIndex == -1) {

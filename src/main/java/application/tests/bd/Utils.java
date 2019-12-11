@@ -2,6 +2,7 @@ package application.tests.bd;
 
 import org.springframework.stereotype.Component;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,6 +20,24 @@ public class Utils {
     } catch (ParseException e) {
       return null;
     }
+  }
+
+  public static String convertDateToString(Date date) {
+    //Конвертирую в день.месяц.год
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+    String dateStr = dateFormat.format(date);
+    StringBuilder day = new StringBuilder();
+    int i = 0;
+    while (dateStr.indexOf(i) != ' ') {
+      if (dateStr.indexOf(i) == '-') {
+        day.append('.');
+      } else {
+        day.append(dateStr.indexOf(i));
+      }
+      i++;
+    }
+    day.reverse();
+    return day.toString();
   }
 
   private static String formatDateToNight(String date) {

@@ -11,6 +11,9 @@ import java.text.ParseException;
 @RestController
 public class ControllerRBC {
 
+  @Autowired
+  private DollarRepository dollarRepository;
+
   public ControllerRBC() {
     this.service = new ServiceRBC();
   }
@@ -28,14 +31,23 @@ public class ControllerRBC {
     return service.parseRequest(body);
   }
 
+  @RequestMapping("/course/upload")
   public int uploadDataBaseDollars() throws ParseException {
     String body = service.getData();
     if (body == null) {
       throw new RuntimeException("404");
     }
-    return service.saveMonthDollars(body);
+    return service.saveMonthDollars(body, dollarRepository);
   }
 
+  @RequestMapping("/course")
+  public String printHistoric() throws ParseException {
+    String body = service.getData();
+    if (body == null) {
+      throw new RuntimeException("404");
+    }
+    return body;
+  }
 
   private final ServiceRBC service;
 }

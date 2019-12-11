@@ -30,7 +30,9 @@ public class DollarRate {
   public Double getPercentage() {
     return course;
   }
-
+  public Date getData() {
+    return data;
+  }
 
   @Override
   public String toString() {
