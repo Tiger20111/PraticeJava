@@ -7,12 +7,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 
 import static application.tests.bd.Utils.formatDate;
 
 class ServiceRBC {
-  @Autowired
-  private DollarRepository dollarRepository;
 
   ServiceRBC() {
     this.restTemplate = new RestTemplate();
@@ -24,8 +23,9 @@ class ServiceRBC {
     return response.getBody();
   }
 
-  int saveMonthDollars(String body) throws ParseException {
+  int saveMonthDollars(String body, DollarRepository dollarRepository) throws ParseException {
     String[] lines = body.split("\n");
+    ArrayList<DollarRate> dollarRates = new ArrayList<>();
     double sumDollars = 0;
     int numDays = 0;
     String date = "";
@@ -38,7 +38,7 @@ class ServiceRBC {
             date = word;
           } else {
             DollarRate dollarRate = new DollarRate(formatDate(date), (sumDollars / numDays));
-            dollarRepository.save(dollarRate);
+            dollarRates.add(dollarRate);
             sumDollars = 0;
             numDays = 0;
             date = word;
@@ -54,9 +54,13 @@ class ServiceRBC {
 
     if (numDays != 0) {
       DollarRate dollarRate = new DollarRate(formatDate(date), (sumDollars / numDays));
-      dollarRepository.save(dollarRate);
+      dollarRates.add(dollarRate);
     }
-    return -1; /////////////////////////////////
+    if (dollarRates.size() != 0) {
+      dollarRepository.saveAll(dollarRates);
+    }
+    return dollarRates.size();
+
   }
 
   private Boolean isRateDollar(String word) {
