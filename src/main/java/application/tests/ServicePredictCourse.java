@@ -54,7 +54,6 @@ public class ServicePredictCourse {
   }
 
   private Double analyseByDate(String date, ArrayList<DependencyDollarWeather> dependencyDollarWeathers) throws Exception {
-    Double sum = 0.0;
     if (dependencyDollarWeathers.size() == 0) {
       return -1.0;
     }
@@ -65,8 +64,8 @@ public class ServicePredictCourse {
 
       koef = 1;
       Random random = new Random();
-      int randomBool = random.nextInt(1);
-      if (randomBool == 0) {
+
+      if (random.nextInt(1) == 0) {
         koef *= -1;
       }
       averageDifference = averageDifference / dependencyDollarWeathers.size();
