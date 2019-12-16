@@ -6,6 +6,7 @@ import application.tests.bd.WeatherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.security.SecureRandom;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -63,7 +64,7 @@ public class ServicePredictCourse {
       averageDifference += dependencyDollarWeathers.get(i + 1).getPercentage() - dependencyDollarWeathers.get(i).getPercentage();
 
       koef = 1;
-      Random random = new Random();
+      Random random = SecureRandom.getInstanceStrong();
 
       if (random.nextInt(1) == 0) {
         koef *= -1;
