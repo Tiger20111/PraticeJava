@@ -58,22 +58,22 @@ public class ServicePredictCourse {
     if (dependencyDollarWeathers.size() == 0) {
       return -1.0;
     }
+    int koef = 0;
     Double averageDifference = 0.0;
     for (int i = 0; i < dependencyDollarWeathers.size() - 1; i++) {
       averageDifference += dependencyDollarWeathers.get(i + 1).getPercentage() - dependencyDollarWeathers.get(i).getPercentage();
 
-      int koef = 1;
+      koef = 1;
       Random random = new Random();
       int randomBool = random.nextInt(1);
       if (randomBool == 0) {
         koef *= -1;
       }
       averageDifference = averageDifference / dependencyDollarWeathers.size();
-      return dependencyDollarWeathers.get(dependencyDollarWeathers.size() - 1).getPercentage()
-              + koef * averageDifference *numDaysLeft(date, dependencyDollarWeathers.get(dependencyDollarWeathers.size() - 1).getDate());
     }
+    return dependencyDollarWeathers.get(dependencyDollarWeathers.size() - 1).getPercentage()
+            + koef * averageDifference *numDaysLeft(date, dependencyDollarWeathers.get(dependencyDollarWeathers.size() - 1).getDate());
 
-    return sum;
   }
 
 }
