@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.text.ParseException;
 
 import static application.tests.bd.Utils.FormatData;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RestController
 public class ControllerPredictCourse {
@@ -24,7 +25,7 @@ public class ControllerPredictCourse {
     this.service = service;
   }
 
-  @RequestMapping(value = "/predict/{data}")
+  @RequestMapping(value = "/predict/{data}", method = GET)
   public Double predictDollar(@PathVariable("data") String data) throws Exception {
     DollarRate dollarRate = dollarRepository.findByData(FormatData(data));
     if (dollarRate != null) {

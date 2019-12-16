@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.text.ParseException;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+
 @RestController
 public class ControllerRBC {
 
@@ -22,7 +24,7 @@ public class ControllerRBC {
     this.service = service;
   }
 
-  @RequestMapping("/course/max")
+  @RequestMapping(value = "/course/max", method = GET)
   public Double getMaxCourse() {
     String body = service.getData();
     if (body == null) {

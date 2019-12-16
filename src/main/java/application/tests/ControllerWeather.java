@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.text.ParseException;
 
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
 
 @RestController
 public class ControllerWeather {
@@ -20,7 +22,7 @@ public class ControllerWeather {
     this.service = new ServiceWeather();
   }
 
-  @RequestMapping(value = "/weather/{data}")
+  @RequestMapping(value = "/weather/{data}", method = POST)
   public Double getWeather(@PathVariable("data") String data) throws Exception {
     return service.getTemperatureDate(data, repWeather);
   }
