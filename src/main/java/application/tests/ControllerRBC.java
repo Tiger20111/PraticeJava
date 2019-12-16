@@ -33,7 +33,7 @@ public class ControllerRBC {
     return service.parseRequest(body);
   }
 
-  @RequestMapping("/course/upload")
+  @RequestMapping(value = "/course/upload", method = GET)
   public int uploadDataBaseDollars() throws Exception {
     String body = service.getData();
     if (body == null) {
@@ -42,7 +42,7 @@ public class ControllerRBC {
     return service.saveMonthDollars(body, dollarRepository);
   }
 
-  @RequestMapping("/course")
+  @RequestMapping(value = "/course", method = GET)
   public String printHistoric() throws ParseException {
     String body = service.getData();
     if (body == null) {
