@@ -2,14 +2,11 @@ package application.tests;
 
 import application.tests.bd.DollarRate;
 import application.tests.bd.DollarRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 
-import static application.tests.bd.Utils.formatDate;
 import static application.tests.bd.Utils.formatDateFromDollarPrint;
 
 class ServiceRBC {
