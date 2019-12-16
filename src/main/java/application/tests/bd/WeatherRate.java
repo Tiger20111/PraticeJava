@@ -22,7 +22,7 @@ public class WeatherRate {
 
   protected WeatherRate() {}
 
-  public WeatherRate(String data, Double percentage) throws ParseException {
+  public WeatherRate(String data, Double percentage) throws Exception {
     this.data = FormatData(data); // принимает в формате "yyyy/MM/dd"
     this.percentage = percentage;
   }

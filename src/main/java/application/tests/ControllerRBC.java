@@ -32,7 +32,7 @@ public class ControllerRBC {
   }
 
   @RequestMapping("/course/upload")
-  public int uploadDataBaseDollars() throws ParseException {
+  public int uploadDataBaseDollars() throws Exception {
     String body = service.getData();
     if (body == null) {
       throw new RuntimeException("404");

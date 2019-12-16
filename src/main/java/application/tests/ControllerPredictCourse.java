@@ -25,7 +25,7 @@ public class ControllerPredictCourse {
   }
 
   @RequestMapping(value = "/predict/{data}")
-  public Double predictDollar(@PathVariable("data") String data) throws ParseException {
+  public Double predictDollar(@PathVariable("data") String data) throws Exception {
     DollarRate dollarRate = dollarRepository.findByData(FormatData(data));
     if (dollarRate != null) {
       return dollarRate.getPercentage();

@@ -72,7 +72,7 @@ public class ServicePredictCourse {
       return dependencyDollarWeathers.get(dependencyDollarWeathers.size() - 1).getPercentage()
               + koef * averageDifference *numDaysLeft(date, dependencyDollarWeathers.get(dependencyDollarWeathers.size() - 1).getDate());
     }
-    
+
     return sum;
   }
 

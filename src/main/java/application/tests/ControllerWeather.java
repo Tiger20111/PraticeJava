@@ -21,7 +21,7 @@ public class ControllerWeather {
   }
 
   @RequestMapping(value = "/weather/{data}")
-  public Double getWeather(@PathVariable("data") String data) throws ParseException {
+  public Double getWeather(@PathVariable("data") String data) throws Exception {
     return service.getTemperatureDate(data, repWeather);
   }
 

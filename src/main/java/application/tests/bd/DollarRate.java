@@ -21,7 +21,7 @@ public class DollarRate {
 
   protected DollarRate() {}
 
-  public DollarRate(String data, Double course) throws ParseException {
+  public DollarRate(String data, Double course) throws Exception {
     this.data = FormatData(data); // принимает в формате "yyyy/MM/dd"
     this.course = course;
   }

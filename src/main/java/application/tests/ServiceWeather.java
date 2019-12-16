@@ -24,7 +24,7 @@ public class ServiceWeather {
 
   }
 
-  private String getTemperatures(String data) {
+  private String getTemperatures(String data) throws Exception {
     String unixTime = convertToUnix(data);
     String url = apiForecast + hash + location + unixTime + flag;
     RestTemplate restTemplate = new RestTemplate();
@@ -32,7 +32,7 @@ public class ServiceWeather {
     return response.getBody();
   }
 
-  Double getTemperatureDate(String data, WeatherRepository weatherRepository) throws ParseException {
+  Double getTemperatureDate(String data, WeatherRepository weatherRepository) throws Exception {
 
     if (weatherRepository == null) {
       return  -1.0;
